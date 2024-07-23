@@ -3,6 +3,7 @@ package com.pragma.plazoleta_usuarios.configuration.exceptionhandler;
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.RoleAlreadyExistsException;
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.RoleNotFoundException;
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.UserAlreadyExistsException;
+import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.UserNotFoundException;
 import com.pragma.plazoleta_usuarios.configuration.Constants;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateException;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateIsNullException;
@@ -91,6 +92,12 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleRoleNoDataFoundException() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE, HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
+                String.format(Constants.USER_NOT_FOUND_EXCEPTION_MESSAGE, ex.getMessage()),
+                HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
     }
 
 }

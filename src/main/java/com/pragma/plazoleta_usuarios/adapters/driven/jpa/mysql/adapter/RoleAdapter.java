@@ -19,9 +19,10 @@ public class RoleAdapter implements IRolesPersistencePort {
     @Override
     public void saveRole(Role role) {
         String normalizedName = role.getName().trim().toUpperCase();
-        if (roleRepository.findByName(normalizedName).isPresent()) {
-            throw new RoleAlreadyExistsException();
-        }
+
+//        if (roleRepository.findByName(normalizedName).isPresent()) {
+//            throw new RoleAlreadyExistsException();
+//        }
 
         role.setName(normalizedName);
         roleRepository.save(roleEntityMapper.toEntity(role));
@@ -37,5 +38,12 @@ public class RoleAdapter implements IRolesPersistencePort {
         }
 
         return roleOptional.get().getName();
+    }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return roleEntityMapper.toModel(roleRepository.findByName(name));
+
+
     }
 }

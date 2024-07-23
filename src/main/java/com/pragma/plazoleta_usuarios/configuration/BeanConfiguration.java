@@ -42,8 +42,9 @@ public class BeanConfiguration {
         return new UserAdapter(userRepository,roleRepository, userEntityMapper);
     }
     @Bean
-    public IUserServicePort userServicePort() {
-        return new UserUseCase(userPersistencePort());
+    public IUserServicePort userServicePort(IUserPersistencePort userPersistencePort, IRolesPersistencePort rolesPersistencePort) {
+        return new UserUseCase(userPersistencePort, rolesPersistencePort );
+
     }
 
 

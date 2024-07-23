@@ -19,23 +19,23 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
+    @Column(nullable = false, length = 25)
     private String name;
-    @Column()
+    @Column(nullable = false,length = 25)
     private String lastName;
 
-    @Column( unique = true)
+    @Column( unique = true, nullable = false, length = 25)
     private String docNumber;
-    @Column(length = 13)
+    @Column(length = 13, nullable = false)
     private String cellphone;
 
-    @Column()
+    @Column(nullable = false)
     private LocalDate birthDate;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
 
-    @Column()
+    @Column(nullable = false)
     private String password;
 
     @ManyToOne

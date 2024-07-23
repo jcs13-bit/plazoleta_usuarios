@@ -27,6 +27,8 @@ public class Constants {
 
     public static final String USER_ALREADY_EXISTS_EXCEPTION_MESSAGE = "The user you want to create already exists";
 
+    public static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "The user not found";
+
 
 
 
