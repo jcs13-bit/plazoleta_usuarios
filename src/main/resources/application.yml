@@ -9,3 +9,14 @@ spring:
     hibernate:
       ddl-auto: update
       show-sql: true
+  security:
+    user:
+      name: jose
+      password: 123
+  jwt:
+    secret: ${secret}
+  logging:
+    level:
+      org:
+        springframework:
+          security: TRACE

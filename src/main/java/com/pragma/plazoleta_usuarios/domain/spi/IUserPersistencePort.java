@@ -16,6 +16,10 @@ public interface IUserPersistencePort {
 
      Optional<User> findByDocNumber(String docNumber);
 
+     void encoderPassword(User user);
+
+
+
 
 }
 

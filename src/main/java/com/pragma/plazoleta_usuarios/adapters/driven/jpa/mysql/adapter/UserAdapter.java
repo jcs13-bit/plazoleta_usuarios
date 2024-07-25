@@ -10,6 +10,7 @@ import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.repository.IUserR
 import com.pragma.plazoleta_usuarios.domain.model.User;
 import com.pragma.plazoleta_usuarios.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -20,8 +21,7 @@ public class UserAdapter implements IUserPersistencePort {
     private  final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final IUserEntityMapper userEntityMapper;
-
-
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -63,6 +63,11 @@ public class UserAdapter implements IUserPersistencePort {
     public Optional<User> findByDocNumber(String docNumber) {
 
         return userRepository.findByDocNumber(docNumber).map(userEntityMapper::toModel);
+    }
+    @Override
+    public void encoderPassword(User user){
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
 }

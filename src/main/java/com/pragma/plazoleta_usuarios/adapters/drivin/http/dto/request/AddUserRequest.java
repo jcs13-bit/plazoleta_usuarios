@@ -26,8 +26,8 @@ public class AddUserRequest {
     private String docNumber;
 
     @NotBlank(message = DtoConstants.FIELD_CELLPHONE_NULL_MESSAGE)
-    @Size(max = 13, min = 13,message = DtoConstants.FIELD_CELLPHONE_SIZE_MESSAGE)
-    @Pattern(regexp = "\\+?\\d{13}", message = DtoConstants.FIELD_CELLPHONE_IS_VALID_MESSAGE)
+    @Size(max = 13 ,message = DtoConstants.FIELD_CELLPHONE_SIZE_MESSAGE)
+    @Pattern(regexp = "^[+]?[0-9]{1,13}$", message = DtoConstants.FIELD_CELLPHONE_IS_VALID_MESSAGE)
     private String cellphone;
 
 
