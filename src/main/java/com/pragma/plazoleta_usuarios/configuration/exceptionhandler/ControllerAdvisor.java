@@ -5,6 +5,7 @@ import com.pragma.plazoleta_usuarios.configuration.Constants;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateException;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateIsNullException;
 import com.pragma.plazoleta_usuarios.domain.exceptions.InvalidPasswordException;
+import com.pragma.plazoleta_usuarios.domain.exceptions.UserIdNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,6 +110,15 @@ public class ControllerAdvisor {
                 String.format(Constants.INVALID_PASSWORD_EXCEPTION_MESSAGE, ex.getMessage()),
                 HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
     }
+
+    @ExceptionHandler(UserIdNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleUserIdNotFoundException(UserIdNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
+                String.format(Constants.USER_NOT_FOUND_EXCEPTION_MESSAGE, ex.getMessage()),
+                HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+    }
+
+
 
 
 }

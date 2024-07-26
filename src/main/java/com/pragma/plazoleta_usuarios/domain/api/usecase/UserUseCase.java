@@ -2,10 +2,12 @@ package com.pragma.plazoleta_usuarios.domain.api.usecase;
 
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.RoleNotFoundException;
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.UserAlreadyExistsException;
+import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.UserNotFoundException;
 import com.pragma.plazoleta_usuarios.domain.api.IUserServicePort;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateException;
 import com.pragma.plazoleta_usuarios.domain.exceptions.ConstantsDomain;
 import com.pragma.plazoleta_usuarios.domain.exceptions.RoleNotFoundExceptionDomain;
+import com.pragma.plazoleta_usuarios.domain.exceptions.UserIdNotFoundException;
 import com.pragma.plazoleta_usuarios.domain.model.Role;
 import com.pragma.plazoleta_usuarios.domain.model.User;
 import com.pragma.plazoleta_usuarios.domain.spi.IRolesPersistencePort;
@@ -14,6 +16,7 @@ import com.pragma.plazoleta_usuarios.domain.util.Constants;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Optional;
 
 public class UserUseCase implements IUserServicePort {
 
@@ -57,14 +60,14 @@ public class UserUseCase implements IUserServicePort {
 
     }
     @Override
-    public void saveUserEmployee(User user) {
+    public Long saveUserEmployee(User user) {
 
         validateUser(user);
 
         user.setRole(getRoleByName(ConstantsDomain.EMPLOYEE));
         userPersistencePort.encoderPassword(user);
-        userPersistencePort.saveUser(user);
-
+        Long id = userPersistencePort.saveUserEmployee(user);
+        return id;
     }
     private void validateUser(User user) {
         validateBirthDate(user.getBirthDate());
@@ -104,6 +107,16 @@ public class UserUseCase implements IUserServicePort {
     public String getUserRoleName(Long id) {
         return userPersistencePort.getUserRoleName(id);
     }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        Optional<User> userOptional = userPersistencePort.getUserById(id);
+        if (userOptional.isEmpty()) {
+            throw new UserIdNotFoundException(ConstantsDomain.USER_NOT_FOUND_EXCEPTION_MESSAGE);
+        }
+        return userOptional;
+    }
+
 
 
 

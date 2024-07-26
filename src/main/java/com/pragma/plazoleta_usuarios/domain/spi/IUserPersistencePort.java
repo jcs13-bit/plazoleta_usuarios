@@ -9,6 +9,9 @@ public interface IUserPersistencePort {
 
      void saveUser(User user);
 
+     Long saveUserEmployee(User user);
+
+
      String getUserRoleName(Long id);
 
      Optional<User> findByEmail(String email);
@@ -17,6 +20,8 @@ public interface IUserPersistencePort {
      Optional<User> findByDocNumber(String docNumber);
 
      void encoderPassword(User user);
+
+     Optional<User> getUserById(Long id);
 
 
 
