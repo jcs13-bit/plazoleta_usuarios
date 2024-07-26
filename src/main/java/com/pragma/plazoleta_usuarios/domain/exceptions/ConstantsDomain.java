@@ -16,5 +16,8 @@ public class ConstantsDomain {
     public static final String EMPLOYEE = "EMPLOYEE";
 
 
+    public static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "The user not found";
+
+
 
 }

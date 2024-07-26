@@ -3,9 +3,11 @@ package com.pragma.plazoleta_usuarios.adapters.drivin.http.controller;
 
 import com.pragma.plazoleta_usuarios.adapters.drivin.http.dto.request.AddUserRequest;
 import com.pragma.plazoleta_usuarios.adapters.drivin.http.dto.response.GetRoleUserResponse;
+import com.pragma.plazoleta_usuarios.adapters.drivin.http.dto.response.UserResponse;
 import com.pragma.plazoleta_usuarios.adapters.drivin.http.mapper.IUserRequestMapper;
 import com.pragma.plazoleta_usuarios.adapters.drivin.http.mapper.IUserResponseMapper;
 import com.pragma.plazoleta_usuarios.domain.api.IUserServicePort;
+import com.pragma.plazoleta_usuarios.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +47,28 @@ public class UserRestControllerAdapter {
         userServicePort.saveUserOwner(userRequestMapper.addRequestToUser(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @PostMapping("/employee")
     @Operation(summary = "Endpoint to add a new user")
-    public ResponseEntity<Void> addUserEmployee( @Valid @RequestBody  AddUserRequest request){
-        userServicePort.saveUserEmployee(userRequestMapper.addRequestToUser(request));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public Long addUserEmployee( @Valid @RequestBody  AddUserRequest request){
+        Long id = userServicePort.saveUserEmployee(userRequestMapper.addRequestToUser(request));
+        return id;
     }
+    
+
+    @GetMapping("/")
+    public UserResponse getUserById(@RequestParam("id") Long id) {
+        User user = userServicePort.getUserById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userResponseMapper.userToUserResponse(user);
+    }
+
+
+
+
+
+
+
+
 
 
 

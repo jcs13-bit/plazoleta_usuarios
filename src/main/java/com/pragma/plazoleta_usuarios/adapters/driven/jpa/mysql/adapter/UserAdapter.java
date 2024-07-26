@@ -30,6 +30,12 @@ public class UserAdapter implements IUserPersistencePort {
         userRepository.save(userEntityMapper.toEntity(user));
 
     }
+
+    @Override
+    public Long saveUserEmployee(User user) {
+        UserEntity userEmployee =  userRepository.save(userEntityMapper.toEntity(user));
+        return userEmployee.getId();
+    }
     //SOLO DEBE LLAMAR AL REPOSITORIO, NO DEBE CREAR LOGICA DE NEGOCIO
 
     @Override
@@ -69,5 +75,12 @@ public class UserAdapter implements IUserPersistencePort {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return userRepository.getUserById(id).map(userEntityMapper::toModel);
+    }
+
+
 
 }
