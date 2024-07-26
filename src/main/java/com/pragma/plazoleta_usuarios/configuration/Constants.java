@@ -29,6 +29,10 @@ public class Constants {
 
     public static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "The user not found";
 
+    public static final String USER_NOT_FOUND_EMAIL_EXCEPTION_MESSAGE = "User not found with email";
+
+    public static final String INVALID_PASSWORD_EXCEPTION_MESSAGE = "Invalid Password";
+
 
 
 

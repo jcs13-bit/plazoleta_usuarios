@@ -4,6 +4,7 @@ import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.RoleNot
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.UserAlreadyExistsException;
 import com.pragma.plazoleta_usuarios.domain.api.IUserServicePort;
 import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateException;
+import com.pragma.plazoleta_usuarios.domain.exceptions.ConstantsDomain;
 import com.pragma.plazoleta_usuarios.domain.exceptions.RoleNotFoundExceptionDomain;
 import com.pragma.plazoleta_usuarios.domain.model.Role;
 import com.pragma.plazoleta_usuarios.domain.model.User;
@@ -50,10 +51,19 @@ public class UserUseCase implements IUserServicePort {
         validateUser(user);
         //colocar el "OWNER" en una constante
 
-        user.setRole(getRoleByName("OWNER"));
+        user.setRole(getRoleByName(ConstantsDomain.OWNER));
+        userPersistencePort.encoderPassword(user);
         userPersistencePort.saveUser(user);
 
+    }
+    @Override
+    public void saveUserEmployee(User user) {
 
+        validateUser(user);
+
+        user.setRole(getRoleByName(ConstantsDomain.EMPLOYEE));
+        userPersistencePort.encoderPassword(user);
+        userPersistencePort.saveUser(user);
 
     }
     private void validateUser(User user) {
@@ -84,7 +94,6 @@ public class UserUseCase implements IUserServicePort {
     private Role getRoleByName(String name){
        Role role = rolesPersistencePort.getRoleByName(name);
        if (role == null){
-
            //poner la excepcion correspondiente del rol no encontrado
            throw new RoleNotFoundExceptionDomain(Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE);
        }

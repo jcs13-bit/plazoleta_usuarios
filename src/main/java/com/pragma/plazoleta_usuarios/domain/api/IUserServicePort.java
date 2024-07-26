@@ -9,5 +9,8 @@ public interface IUserServicePort {
   void saveUserOwner(User user);
 
 
+  void saveUserEmployee(User user);
+
+
   String getUserRoleName(Long id);
 }

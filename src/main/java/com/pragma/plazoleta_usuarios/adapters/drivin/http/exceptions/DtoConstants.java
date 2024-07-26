@@ -41,6 +41,12 @@ public class DtoConstants {
 
     public static final String FIELD_ROL_NULL_MESSAGE = "Field 'Rol' cannot be null";
 
+    public static final String FIELD_PASSWORD_IS_VALID_MESSAGE = "Field 'Password' is not a valid password";
+
+    public static final String FIELD_PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+
+
 
 
 

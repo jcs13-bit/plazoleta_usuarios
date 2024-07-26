@@ -7,10 +7,12 @@ import com.pragma.plazoleta_usuarios.adapters.drivin.http.mapper.IUserRequestMap
 import com.pragma.plazoleta_usuarios.adapters.drivin.http.mapper.IUserResponseMapper;
 import com.pragma.plazoleta_usuarios.domain.api.IUserServicePort;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,21 +29,32 @@ public class UserRestControllerAdapter {
     private final IUserResponseMapper userResponseMapper;
 
 
-
-    @PostMapping("/owner")
-    @Operation(summary = "Endpoint to add a new user")
-    public ResponseEntity<Void> addUserOwner( @Valid @RequestBody  AddUserRequest request){
-        userServicePort.saveUserOwner(userRequestMapper.addRequestToUser(request));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-
     @GetMapping(value = "/getRoles")
     @Operation(summary = "Endpoint to get user role by ID")
     public ResponseEntity<GetRoleUserResponse> getUserRoles(@RequestParam("id") Long id) {
 
         return ResponseEntity.ok(userResponseMapper.getUserRoleNameToString(userServicePort.getUserRoleName(id)));
     }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearer-key")
+    @PostMapping("/owner")
+    @Operation(summary = "Endpoint to add a new user")
+    public ResponseEntity<Void> addUserOwner( @Valid @RequestBody  AddUserRequest request){
+        userServicePort.saveUserOwner(userRequestMapper.addRequestToUser(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @PostMapping("/employee")
+    @Operation(summary = "Endpoint to add a new user")
+    public ResponseEntity<Void> addUserEmployee( @Valid @RequestBody  AddUserRequest request){
+        userServicePort.saveUserEmployee(userRequestMapper.addRequestToUser(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+
+
 
 
 }
