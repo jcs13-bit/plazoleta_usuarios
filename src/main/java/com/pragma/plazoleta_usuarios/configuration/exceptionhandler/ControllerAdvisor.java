@@ -2,10 +2,7 @@ package com.pragma.plazoleta_usuarios.configuration.exceptionhandler;
 
 import com.pragma.plazoleta_usuarios.adapters.driven.jpa.mysql.exception.*;
 import com.pragma.plazoleta_usuarios.configuration.Constants;
-import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateException;
-import com.pragma.plazoleta_usuarios.domain.exceptions.BirthDateIsNullException;
-import com.pragma.plazoleta_usuarios.domain.exceptions.InvalidPasswordException;
-import com.pragma.plazoleta_usuarios.domain.exceptions.UserIdNotFoundException;
+import com.pragma.plazoleta_usuarios.domain.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -117,7 +114,12 @@ public class ControllerAdvisor {
                 String.format(Constants.USER_NOT_FOUND_EXCEPTION_MESSAGE, ex.getMessage()),
                 HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
     }
-
+    @ExceptionHandler(RoleNotFoundExceptionDomain.class)
+    public ResponseEntity<ExceptionResponse> handleRoleNotFoundExceptionDomain(RoleNotFoundExceptionDomain ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
+                String.format(Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE, ex.getMessage()),
+                HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+    }
 
 
 

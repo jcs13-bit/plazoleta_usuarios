@@ -10,6 +10,8 @@ public interface IUserServicePort {
 
   void saveUserOwner(User user);
 
+  void saveUserClient(User user);
+
 
   Long saveUserEmployee(User user);
 

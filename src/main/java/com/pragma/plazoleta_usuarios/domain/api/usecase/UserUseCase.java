@@ -52,9 +52,16 @@ public class UserUseCase implements IUserServicePort {
     public void saveUserOwner(User user) {
 
         validateUser(user);
-        //colocar el "OWNER" en una constante
-
         user.setRole(getRoleByName(ConstantsDomain.OWNER));
+        userPersistencePort.encoderPassword(user);
+        userPersistencePort.saveUser(user);
+
+    }
+    @Override
+    public void saveUserClient(User user) {
+
+        validateUser(user);
+        user.setRole(getRoleByName(ConstantsDomain.CLIENT));
         userPersistencePort.encoderPassword(user);
         userPersistencePort.saveUser(user);
 
@@ -66,8 +73,7 @@ public class UserUseCase implements IUserServicePort {
 
         user.setRole(getRoleByName(ConstantsDomain.EMPLOYEE));
         userPersistencePort.encoderPassword(user);
-        Long id = userPersistencePort.saveUserEmployee(user);
-        return id;
+        return userPersistencePort.saveUserEmployee(user);
     }
     private void validateUser(User user) {
         validateBirthDate(user.getBirthDate());
@@ -97,7 +103,6 @@ public class UserUseCase implements IUserServicePort {
     private Role getRoleByName(String name){
        Role role = rolesPersistencePort.getRoleByName(name);
        if (role == null){
-           //poner la excepcion correspondiente del rol no encontrado
            throw new RoleNotFoundExceptionDomain(Constants.ROLE_NOT_FOUND_EXCEPTION_MESSAGE);
        }
        return role;

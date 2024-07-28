@@ -51,8 +51,14 @@ public class UserRestControllerAdapter {
     @PostMapping("/employee")
     @Operation(summary = "Endpoint to add a new user")
     public Long addUserEmployee( @Valid @RequestBody  AddUserRequest request){
-        Long id = userServicePort.saveUserEmployee(userRequestMapper.addRequestToUser(request));
-        return id;
+        return userServicePort.saveUserEmployee(userRequestMapper.addRequestToUser(request));
+    }
+
+    @PostMapping("/client")
+    @Operation(summary = "Endpoint to add a new user")
+    public ResponseEntity<Void> addUserClient( @Valid @RequestBody  AddUserRequest request){
+        userServicePort.saveUserClient(userRequestMapper.addRequestToUser(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
 

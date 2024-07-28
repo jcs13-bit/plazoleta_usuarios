@@ -13,6 +13,8 @@ public class ConstantsDomain {
     public static final String EMAIL_USER_ALREADY_EXISTS_EXCEPTION_MESSAGE = "Email already exists";
 
     public static final String OWNER = "OWNER";
+    public static final String CLIENT = "CLIENT";
+
     public static final String EMPLOYEE = "EMPLOYEE";
 
 
